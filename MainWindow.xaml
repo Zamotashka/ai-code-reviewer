@@ -5,7 +5,7 @@
         MinHeight="500" MinWidth="700"
         WindowStartupLocation="CenterScreen"
         Background="#1e1e2e"
-        Icon="pack://application:,,,/app.ico">
+        Icon="app.ico">
 
     <Window.Resources>
 
@@ -25,7 +25,6 @@
                             <ContentPresenter Margin="{TemplateBinding Padding}"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <!-- ИСПРАВЛЕНО: был жёлтый hover, теперь тёмно-фиолетовый -->
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#2a2a3d"/>
                             </Trigger>
@@ -133,7 +132,6 @@
             <Setter Property="Padding" Value="12"/>
         </Style>
 
-        <!-- ИСПРАВЛЕНО: тёмный стиль для ComboBoxItem -->
         <Style TargetType="ComboBoxItem">
             <Setter Property="Foreground" Value="#cdd6f4"/>
             <Setter Property="Background" Value="#313244"/>
@@ -296,9 +294,8 @@
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
                     <TextBlock Text="Язык:" Foreground="#6c7086"
                                FontSize="13" VerticalAlignment="Center" Margin="0,0,12,0"/>
-                    <!-- ИСПРАВЛЕНО: ComboBox с тёмным стилем -->
                     <ComboBox x:Name="LangCombo"
-                              Background="#313244" Foreground="#45475a"
+                              Background="#313244" Foreground="#6c7086"
                               BorderBrush="#45475a" FontSize="13" Padding="8,4"
                               MinWidth="160">
                         <ComboBoxItem Content="C# (.cs)" Tag="cs" IsSelected="True"/>
@@ -333,15 +330,31 @@
                     <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
                 <StackPanel Grid.Column="0" Margin="0,0,16,0">
-                    <TextBlock Text="История" Foreground="#cdd6f4"
-                               FontSize="16" FontWeight="Medium" Margin="0,0,0,16"/>
+                    <!-- ДОБАВЛЕНО: заголовок + кнопка очистки -->
+                    <Grid Margin="0,0,0,16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="История" Foreground="#cdd6f4"
+                                   FontSize="16" FontWeight="Medium"
+                                   VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Content="🗑"
+                                Style="{StaticResource SecondaryButton}"
+                                FontSize="13" Padding="8,4"
+                                ToolTip="Очистить историю"
+                                Click="ClearHistory_Click"/>
+                    </Grid>
+
                     <ListBox x:Name="HistoryList"
                              Background="#181825" BorderBrush="#313244"
                              Foreground="#cdd6f4" FontSize="12"
                              SelectionChanged="HistoryList_SelectionChanged"
-                             Height="460"/>
+                             Height="440"/>
                 </StackPanel>
+
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Детали" Foreground="#cdd6f4"
                                FontSize="16" FontWeight="Medium" Margin="0,0,0,16"/>
